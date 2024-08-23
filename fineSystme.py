@@ -5,7 +5,7 @@
 # if attendenc (80 > 85 )(1000rs /-)
 
 attendence = int(input("ENTER STUDENT ATTENDENCE IN '%' "))
-if(attendence < 0 or attendec > 100):
+if(attendence < 0 or attendence > 100):
     print("INVALID INPUT! attendence must be between '0' and '100' !")
 elif(attendence >= 90):
     print("NO FINE ! ")
