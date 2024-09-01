@@ -3,17 +3,19 @@ attendance = int(input("ENTER STUDENT ATTENDANCE IN '%' "))
 if attendance < 0 or attendance > 100:
     print("INVALID INPUT! Attendance must be between '0' and '100'!")
 else:
+    # Handle cases for attendance below 70
     if attendance < 70:
-        details = input(
-            "If you have any medical issue, type 'YES' else type 'NO': ").lower()
+        details = input("If you have any medical issue type 'YES' else type 'NO': ").lower()
         if details == "yes":
             days = int(input("How many days were you sick? "))
-            updatedAtt = days * 7
-            adjusted_attendance = attendance + updatedAtt
+            # Adjust attendance based on medical days
+            new_attendance = days * 7  # assuming 7% attendance per sick day
+            adjusted_attendance = attendance + new_attendance
             if adjusted_attendance > 100:
-                adjusted_attendance = 100
+                adjusted_attendance = 100  # Cap the attendance at 100%
             attendance = adjusted_attendance
-            print(f"Your updated attendance: {attendance}%")
+
+    # Check fine status after attendance adjustments (if any)
     if attendance >= 90:
         print("NO FINE! You are eligible for the prize distribution policy!")
     elif 85 <= attendance < 90:
@@ -32,4 +34,5 @@ else:
         print("You have to submit 3500rs + 5 assignments for every subject.")
     elif 50 <= attendance < 55:
         print("You have to submit 4000rs + 6 assignments for every subject.")
+    else:
         print("Submit the fine to the Co-Ordinator, arigatto!")
