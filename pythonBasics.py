@@ -1,0 +1,2 @@
+#find area
+area = int()
