@@ -12,6 +12,7 @@ while True:
     totalAmount = (note500 * 500) + (note200 * 200) + (note100 * 100) + (note50 * 50) + (note20 * 20) + (note10 * 10)
     if totalAmount == money:
         print(f"\nYou are depositing a total of ${totalAmount}...")
+        break
     elif totalAmount < money:
         print("Your provided money is Less then your depositing money: ")
         temp = money - totalAmount
@@ -23,4 +24,5 @@ while True:
     print("do you want to edit your notes order? ")
     ask = int(input("Enter '1' to continue... "))
     if ask != 1:
-        print("Invalid input! exiting... ")
+        print("Invalid input!\n exiting... ")
+        break
