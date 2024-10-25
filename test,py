@@ -1,0 +1,152 @@
+import re
+import json
+
+# Dictionary to store contacts
+contacts = {}
+
+# Function to add a new contact with validation
+def add_contact():
+    name = input("Enter name: ").strip()
+    phone = input("Enter phone number: ").strip()
+    email = input("Enter email: ").strip()
+    
+    # Validate phone number and email
+    if not validate_phone(phone):
+        print("Invalid phone number format. Must be 10 digits.")
+        return
+    if not validate_email(email):
+        print("Invalid email format.")
+        return
+    
+    if name in contacts:
+        print("Contact already exists!")
+    else:
+        contacts[name] = {"phone": phone, "email": email}
+        print("Contact added successfully!")
+
+# Function to validate phone number
+def validate_phone(phone):
+    return re.match(r"^\d{10}$", phone)
+
+# Function to validate email
+def validate_email(email):
+    return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
+
+# Function to view all contacts
+def view_contacts():
+    if not contacts:
+        print("No contacts available.")
+    else:
+        for name, details in contacts.items():
+            print(f"Name: {name}, Phone: {details['phone']}, Email: {details['email']}")
+
+# Function to search for a contact by name
+def search_contact():
+    name = input("Enter name to search: ").strip()
+    if name in contacts:
+        details = contacts[name]
+        print(f"Name: {name}, Phone: {details['phone']}, Email: {details['email']}")
+    else:
+        print("Contact not found.")
+
+# Function to update an existing contact
+def update_contact():
+    name = input("Enter name to update: ").strip()
+    if name in contacts:
+        phone = input("Enter new phone number: ").strip()
+        email = input("Enter new email: ").strip()
+        
+        if not validate_phone(phone):
+            print("Invalid phone number format. Must be 10 digits.")
+            return
+        if not validate_email(email):
+            print("Invalid email format.")
+            return
+        
+        contacts[name] = {"phone": phone, "email": email}
+        print("Contact updated successfully!")
+    else:
+        print("Contact not found.")
+
+# Function to delete a contact
+def delete_contact():
+    name = input("Enter name to delete: ").strip()
+    if name in contacts:
+        del contacts[name]
+        print("Contact deleted successfully!")
+    else:
+        print("Contact not found.")
+
+# Function to sort contacts by name
+def sort_contacts():
+    if not contacts:
+        print("No contacts available to sort.")
+    else:
+        sorted_contacts = dict(sorted(contacts.items()))
+        for name, details in sorted_contacts.items():
+            print(f"Name: {name}, Phone: {details['phone']}, Email: {details['email']}")
+
+# Function to export contacts to a file
+def export_contacts(filename="contacts.json"):
+    with open(filename, "w") as file:
+        json.dump(contacts, file, indent=4)
+    print(f"Contacts exported to {filename} successfully!")
+
+# Function to import contacts from a file
+def import_contacts(filename="contacts.json"):
+    global contacts
+    try:
+        with open(filename, "r") as file:
+            contacts = json.load(file)
+        print(f"Contacts imported from {filename} successfully!")
+    except FileNotFoundError:
+        print(f"{filename} not found.")
+
+# Function to count the total number of contacts
+def count_contacts():
+    print(f"Total number of contacts: {len(contacts)}")
+
+# Main menu
+def main():
+    while True:
+        print("\nContact List Menu")
+        print("1. Add Contact")
+        print("2. View Contacts")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Sort Contacts by Name")
+        print("7. Export Contacts to File")
+        print("8. Import Contacts from File")
+        print("9. Count Total Contacts")
+        print("10. Exit")
+        
+        choice = input("Choose an option (1-10): ").strip()
+        
+        if choice == "1":
+            add_contact()
+        elif choice == "2":
+            view_contacts()
+        elif choice == "3":
+            search_contact()
+        elif choice == "4":
+            update_contact()
+        elif choice == "5":
+            delete_contact()
+        elif choice == "6":
+            sort_contacts()
+        elif choice == "7":
+            export_contacts()
+        elif choice == "8":
+            import_contacts()
+        elif choice == "9":
+            count_contacts()
+        elif choice == "10":
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+# Run the main program
+if __name__ == "__main__":
+    main()
